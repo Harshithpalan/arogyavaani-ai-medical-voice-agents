@@ -15,6 +15,7 @@ import { FeatureBentoGrid } from "./_components/FeatureBentoGrid";
 import Logo from "@/components/ui/Logo";
 
 export default function Home() {
+  const { user } = useUser();
   return (
     <div className="relative min-h-screen bg-background overflow-x-hidden">
       {/* Premium Background Effects */}
@@ -68,7 +69,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500">
-            <Link href="/dashboard">
+            <Link href={user ? "/dashboard" : "/sign-up"}>
               <button className="cssbuttonsIoButton">
                 Get Started
                 <div className="icon">
