@@ -77,11 +77,6 @@ const Navbar = () => {
             </Link>
 
             <div className="flex items-center gap-4 md:gap-8">
-                <div className="hidden md:flex items-center gap-6 mr-4">
-                    <Link href="/dashboard" className="text-sm font-bold hover:text-primary transition-colors">Home</Link>
-                    <Link href="/dashboard/history" className="text-sm font-bold hover:text-primary transition-colors">History</Link>
-                    <Link href="/pricing" className="text-sm font-bold hover:text-primary transition-colors">Pricing</Link>
-                </div>
 
                 <div className="flex items-center gap-4">
                     <BackButton href="/dashboard" label="Back" />

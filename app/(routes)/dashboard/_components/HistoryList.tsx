@@ -3,7 +3,10 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import AddNewSessionDialog from "./AddNewSessionDialog";
+import dynamic from "next/dynamic";
+const AddNewSessionDialog = dynamic(() => import("./AddNewSessionDialog"), {
+  ssr: false,
+});
 import axios from "axios";
 import HistoryTable, { SessionDetail } from "./HistoryTable";
 import { UserDetailContext } from "@/context/UserDetailContext";

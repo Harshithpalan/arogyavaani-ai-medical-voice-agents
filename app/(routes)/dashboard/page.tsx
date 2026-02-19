@@ -1,8 +1,14 @@
 import React from "react";
-import HistoryList from "./_components/HistoryList";
-import { Button } from "@/components/ui/button";
-import DoctorsAgentList from "./_components/DoctorsAgentList";
-import AddNewSessionDialog from "./_components/AddNewSessionDialog";
+import dynamic from "next/dynamic";
+const HistoryList = dynamic(() => import("./_components/HistoryList"), {
+    loading: () => <div className="h-40 animate-pulse bg-muted rounded-2xl" />,
+});
+
+const DoctorsAgentList = dynamic(() => import("./_components/DoctorsAgentList"), {
+    loading: () => <div className="h-40 animate-pulse bg-muted rounded-2xl" />,
+});
+
+const AddNewSessionDialog = dynamic(() => import("./_components/AddNewSessionDialog"));
 
 function dashboard() {
     return (

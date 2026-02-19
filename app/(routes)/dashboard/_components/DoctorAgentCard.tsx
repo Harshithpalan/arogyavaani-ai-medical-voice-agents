@@ -26,6 +26,7 @@ function DoctorAgentCard({ doctorAgent }: props) {
           src={doctorAgent.image}
           alt={doctorAgent.specialist}
           fill
+          priority={doctorAgent.id <= 4}
           className='object-cover transition-transform duration-700 group-hover:scale-110'
         />
         {/* Subtle Overlay */}

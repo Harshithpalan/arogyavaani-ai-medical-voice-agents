@@ -1,5 +1,6 @@
 "use client"
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -11,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 import moment from 'moment';
 import Image from 'next/image';
+import axios from 'axios';
 
 import {
   ShieldAlert,
@@ -22,14 +24,16 @@ import {
   CheckCircle2,
   Calendar,
   User,
-  AlertCircle
+  AlertCircle,
+  Loader2
 } from "lucide-react";
 
 interface SessionDetail {
   createdOn: string | number | Date;
   selectedDoctor: any;
   notes: string;
-  report: {
+  sessionId: string;
+  report?: {
     chiefComplaint: string;
     summary: string;
     symptoms: string[];
@@ -48,7 +52,28 @@ type props = {
 }
 
 function ViewReportDialog({ record }: props) {
-  const report = record.report;
+  const [report, setReport] = useState(record.report);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!report && record.sessionId) {
+      GetFullReport();
+    }
+  }, [report, record.sessionId])
+
+  const GetFullReport = async () => {
+    try {
+      setLoading(true);
+      const result = await axios.get('/api/session-chat?sessionId=' + record.sessionId);
+      if (result.data) {
+        setReport(result.data.report);
+      }
+    } catch (e) {
+      console.error("Error fetching full report:", e);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <Dialog>
@@ -73,7 +98,7 @@ function ViewReportDialog({ record }: props) {
         </div>
 
         <div className="p-8 space-y-8">
-          {/* Header Info */}
+          {/* Header Info - Always available from metadata */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-2xl bg-muted/30 border border-border">
             <div className="flex items-center gap-4">
               <div className="h-12 w-12 rounded-xl overflow-hidden border bg-background flex items-center justify-center">
@@ -99,94 +124,103 @@ function ViewReportDialog({ record }: props) {
             </div>
           </div>
 
-          {/* Chief Complaint & Summary */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 text-primary">
-              <ShieldAlert className="w-5 h-5" />
-              <h3 className="font-bold text-xl uppercase tracking-tight text-foreground/90">Chief Complaint</h3>
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+              <Loader2 className="w-10 h-10 text-primary animate-spin" />
+              <p className="text-muted-foreground font-medium animate-pulse">Loading clinical report...</p>
             </div>
-            <p className="text-lg font-semibold text-foreground/80 pl-7 leading-snug">
-              {report?.chiefComplaint || "No specific complaint recorded."}
-            </p>
-
-            <div className="mt-6 p-5 bg-primary/5 rounded-2xl border border-primary/10 italic text-muted-foreground leading-relaxed pl-7">
-              "{report?.summary || "No summary available."}"
-            </div>
-          </div>
-
-          {/* Clinical Findings Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Symptoms */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-blue-500">
-                <Activity className="w-5 h-5" />
-                <h3 className="font-bold uppercase tracking-tight text-foreground/80">Symptoms</h3>
-              </div>
-              <div className="flex flex-wrap gap-2 pl-7">
-                {report?.symptoms?.map((symptom, i) => (
-                  <span key={i} className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 text-sm font-medium">
-                    {symptom}
-                  </span>
-                )) || <p className="text-muted-foreground text-sm">No symptoms noted.</p>}
-              </div>
-            </div>
-
-            {/* Severity & Duration */}
-            <div className="space-y-6 pl-0 md:pl-8 border-l border-border">
-              <div className="flex items-start gap-4">
-                <div className="mt-1 p-2 bg-red-500/10 rounded-lg">
-                  <AlertCircle className="w-4 h-4 text-red-500" />
+          ) : (
+            <>
+              {/* Chief Complaint & Summary */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-primary">
+                  <ShieldAlert className="w-5 h-5" />
+                  <h3 className="font-bold text-xl uppercase tracking-tight text-foreground/90">Chief Complaint</h3>
                 </div>
-                <div>
-                  <p className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Clinical Severity</p>
-                  <p className="font-bold capitalize text-red-500">{report?.severity || "Normal"}</p>
+                <p className="text-lg font-semibold text-foreground/80 pl-7 leading-snug">
+                  {report?.chiefComplaint || "No specific complaint recorded."}
+                </p>
+
+                <div className="mt-6 p-5 bg-primary/5 rounded-2xl border border-primary/10 italic text-muted-foreground leading-relaxed pl-7">
+                  "{report?.summary || "No summary available."}"
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <div className="mt-1 p-2 bg-primary/10 rounded-lg">
-                  <Clock className="w-4 h-4 text-primary" />
+
+              {/* Clinical Findings Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Symptoms */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 text-blue-500">
+                    <Activity className="w-5 h-5" />
+                    <h3 className="font-bold uppercase tracking-tight text-foreground/80">Symptoms</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2 pl-7">
+                    {report?.symptoms?.map((symptom, i) => (
+                      <span key={i} className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 text-sm font-medium">
+                        {symptom}
+                      </span>
+                    )) || <p className="text-muted-foreground text-sm">No symptoms noted.</p>}
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Duration</p>
-                  <p className="font-bold text-foreground">{report?.duration || "Not specified"}</p>
+
+                {/* Severity & Duration */}
+                <div className="space-y-6 pl-0 md:pl-8 border-l border-border">
+                  <div className="flex items-start gap-4">
+                    <div className="mt-1 p-2 bg-red-500/10 rounded-lg">
+                      <AlertCircle className="w-4 h-4 text-red-500" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Clinical Severity</p>
+                      <p className="font-bold capitalize text-red-500">{report?.severity || "Normal"}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="mt-1 p-2 bg-primary/10 rounded-lg">
+                      <Clock className="w-4 h-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Duration</p>
+                      <p className="font-bold text-foreground">{report?.duration || "Not specified"}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <hr className="border-border" />
+              <hr className="border-border" />
 
-          {/* Medications & Recommendations */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-primary">
-                <Pill className="w-5 h-5" />
-                <h3 className="font-bold uppercase tracking-tight text-foreground/80">Medications</h3>
+              {/* Medications & Recommendations */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 text-primary">
+                    <Pill className="w-5 h-5" />
+                    <h3 className="font-bold uppercase tracking-tight text-foreground/80">Medications</h3>
+                  </div>
+                  <ul className="space-y-2 pl-7">
+                    {report?.medicationsMentioned?.length ? report.medicationsMentioned.map((med, i) => (
+                      <li key={i} className="text-sm flex items-center gap-2 text-muted-foreground">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary/50" /> {med}
+                      </li>
+                    )) : <li className="text-sm text-muted-foreground">None mentioned.</li>}
+                  </ul>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 text-green-600">
+                    <CheckCircle2 className="w-5 h-5" />
+                    <h3 className="font-bold uppercase tracking-tight text-foreground/80">AI Recommendations</h3>
+                  </div>
+                  <ul className="space-y-3 pl-7">
+                    {report?.recommendations?.map((rec, i) => (
+                      <li key={i} className="text-sm p-3 bg-green-500/5 border border-green-500/10 rounded-xl text-foreground/80 flex gap-3 leading-snug">
+                        <span className="text-green-600 font-bold shrink-0">{i + 1}.</span>
+                        {rec}
+                      </li>
+                    )) || <li className="text-sm text-muted-foreground">No recommendations provided.</li>}
+                  </ul>
+                </div>
               </div>
-              <ul className="space-y-2 pl-7">
-                {report?.medicationsMentioned?.length ? report.medicationsMentioned.map((med, i) => (
-                  <li key={i} className="text-sm flex items-center gap-2 text-muted-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary/50" /> {med}
-                  </li>
-                )) : <li className="text-sm text-muted-foreground">None mentioned.</li>}
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-green-600">
-                <CheckCircle2 className="w-5 h-5" />
-                <h3 className="font-bold uppercase tracking-tight text-foreground/80">AI Recommendations</h3>
-              </div>
-              <ul className="space-y-3 pl-7">
-                {report?.recommendations?.map((rec, i) => (
-                  <li key={i} className="text-sm p-3 bg-green-500/5 border border-green-500/10 rounded-xl text-foreground/80 flex gap-3 leading-snug">
-                    <span className="text-green-600 font-bold shrink-0">{i + 1}.</span>
-                    {rec}
-                  </li>
-                )) || <li className="text-sm text-muted-foreground">No recommendations provided.</li>}
-              </ul>
-            </div>
-          </div>
+            </>
+          )}
         </div>
 
         <div className="p-8 bg-muted/20 border-t border-border flex flex-col gap-4">
