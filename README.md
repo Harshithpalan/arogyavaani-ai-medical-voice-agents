@@ -96,12 +96,3 @@ Open [http://localhost:3000](http://localhost:3000) to see the application in ac
 | **Cardiologist** | Heart health and blood pressure. |
 | **Dermatologist** | Skin issues, rashes, and infections. |
 
----
-
-## 📜 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-<p align="center">Built with ❤️ for a healthier future.</p>
