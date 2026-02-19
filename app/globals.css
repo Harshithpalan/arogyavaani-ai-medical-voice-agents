@@ -1,26 +1,623 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.99 0.002 247.839);
+  --foreground: oklch(0.12 0.02 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0.02 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0.02 260);
+  --primary: oklch(0.45 0.15 250);
+  /* Medical Blue */
+  --primary-foreground: oklch(0.99 0.002 247.839);
+  --secondary: oklch(0.96 0.01 250);
+  --secondary-foreground: oklch(0.45 0.15 250);
+  --muted: oklch(0.96 0.01 250);
+  --muted-foreground: oklch(0.5 0.02 260);
+  --accent: oklch(0.96 0.01 250);
+  --accent-foreground: oklch(0.45 0.15 250);
+  --destructive: oklch(0.55 0.22 25);
+  --border: oklch(0.92 0.01 260);
+  --input: oklch(0.92 0.01 260);
+  --ring: oklch(0.45 0.15 250 / 0.5);
+  --chart-1: oklch(0.45 0.15 250);
+  --chart-2: oklch(0.65 0.12 200);
+  --chart-3: oklch(0.55 0.18 300);
+  --chart-4: oklch(0.75 0.14 150);
+  --chart-5: oklch(0.85 0.1 100);
+  --sidebar: oklch(0.99 0.002 247.839);
+  --sidebar-foreground: oklch(0.12 0.02 260);
+  --sidebar-primary: oklch(0.45 0.15 250);
+  --sidebar-primary-foreground: oklch(0.99 0.002 247.839);
+  --sidebar-accent: oklch(0.96 0.01 250);
+  --sidebar-accent-foreground: oklch(0.45 0.15 250);
+  --sidebar-border: oklch(0.92 0.01 260);
+  --sidebar-ring: oklch(0.45 0.15 250 / 0.5);
+}
+
+.dark {
+  --background: oklch(0.1 0.02 250);
+  --foreground: oklch(0.95 0.01 250);
+  --card: oklch(0.12 0.02 250);
+  --card-foreground: oklch(0.95 0.01 250);
+  --popover: oklch(0.12 0.02 250);
+  --popover-foreground: oklch(0.95 0.01 250);
+  --primary: oklch(0.65 0.18 240);
+  --primary-foreground: oklch(0.1 0.02 250);
+  --secondary: oklch(0.15 0.03 250);
+  --secondary-foreground: oklch(0.95 0.01 250);
+  --muted: oklch(0.15 0.03 250);
+  --muted-foreground: oklch(0.6 0.02 250);
+  --accent: oklch(0.15 0.03 250);
+  --accent-foreground: oklch(0.95 0.01 250);
+  --destructive: oklch(0.5 0.2 25);
+  --border: oklch(0.2 0.02 250);
+  --input: oklch(0.2 0.02 250);
+  --ring: oklch(0.65 0.18 240 / 0.5);
+  --chart-1: oklch(0.65 0.18 240);
+  --chart-2: oklch(0.75 0.15 200);
+  --chart-3: oklch(0.6 0.2 300);
+  --chart-4: oklch(0.8 0.18 150);
+  --chart-5: oklch(0.9 0.15 100);
+  --sidebar: oklch(0.12 0.02 250);
+  --sidebar-foreground: oklch(0.95 0.01 250);
+  --sidebar-primary: oklch(0.65 0.18 240);
+  --sidebar-primary-foreground: oklch(0.1 0.02 250);
+  --sidebar-accent: oklch(0.15 0.03 250);
+  --sidebar-accent-foreground: oklch(0.95 0.01 250);
+  --sidebar-border: oklch(0.2 0.02 250);
+  --sidebar-ring: oklch(0.65 0.18 240 / 0.5);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .glass {
+    @apply bg-white/40 backdrop-blur-xl dark:bg-black/40 border-white/20 dark:border-white/10;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+
+  .bg-dot-pattern {
+    background-image: radial-gradient(circle, currentColor 0.5px, transparent 0.5px);
+    background-size: 32px 32px;
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite linear;
+  }
+
+  .cssbuttonsIoButton {
+    background: black;
+    color: white;
+    font-family: inherit;
+    border: 1px solid white;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 2rem;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    height: 2.8em;
+    padding-right: 3.3em;
+    padding-left: 1rem;
+    cursor: pointer;
+
+    /* Smooth transition for background and text color */
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
+  }
+
+  .cssbuttonsIoButton .icon {
+    background: white;
+    margin-left: 1em;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.2em;
+    width: 2.2em;
+    border-radius: 2rem;
+    right: 0.3em;
+
+    /* Already includes transition for icon */
+    transition:
+      background-position 0.5s ease-out,
+      border 0.2s ease-out,
+      color 0.5s ease-out;
+    will-change: width, transform;
+  }
+
+  .cssbuttonsIoButton:hover {
+    background-color: white;
+    color: #000000;
+    border: 1px solid #000;
+  }
+
+  .cssbuttonsIoButton .icon svg {
+    width: 1.1em;
+    transition: transform 0.3s ease-out;
+    will-change: transform;
+    color: #000000;
+  }
+
+  .cssbuttonsIoButton:hover .icon svg {
+    transform: translateX(0.1em) rotate(-25deg);
+  }
+
+  .cssbuttonsIoButton:active .icon {
+    transform: scale(0.95);
+  }
+
+  .dashboard-button {
+    position: relative;
+    overflow: hidden;
+    height: 3rem;
+    padding: 0 2rem;
+    border-radius: 1.5rem;
+    background: #3d3a4e;
+    background-size: 400%;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    transition: all 0.475s;
+  }
+
+  .dashboard-button:hover::before {
+    transform: scaleX(1);
+  }
+
+  .dashboard-button-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .dashboard-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    width: 100%;
+    height: inherit;
+    border-radius: inherit;
+    background: linear-gradient(82.3deg,
+        rgba(150, 93, 233, 1) 10.8%,
+        rgba(99, 88, 238, 1) 94.3%);
+    transition: all 0.475s;
+  }
+
+  .anatomy-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 14px;
+    background-image: linear-gradient(#3470fa, #313ed7);
+    color: white;
+    border: solid 2px #0618db;
+    height: 50px;
+    padding: 0px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    transform: scale(0.89);
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .anatomy-button:not(:hover) .hide,
+  .anatomy-button:not(:hover) .icon::before,
+  .anatomy-button:not(:hover) .icon::after {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.4);
+  }
+
+  .anatomy-button .hide {
+    transition: all 0.2s ease;
+  }
+
+  .anatomy-button:active {
+    background-image: linear-gradient(#313ed7, #3470fa);
+    border-color: #313ed7;
+  }
+
+  .anatomy-button .icon {
+    position: relative;
+  }
+
+  .anatomy-button .icon::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 6px;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 0, 170);
+    border-radius: 100%;
+  }
+
+  .anatomy-button .icon::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(-19%, -60%);
+    width: 100px;
+    height: 33px;
+    background-color: transparent;
+    border-radius: 12px 22px 2px 2px;
+    border-right: solid 2px rgb(255, 0, 170);
+    border-top: solid 2px transparent;
+  }
+
+  .anatomy-button .icon .text-icon {
+    color: rgb(255, 0, 170);
+    position: absolute;
+    font-size: 12px;
+    left: -37px;
+    top: -38px;
+  }
+
+  .anatomy-button .icon svg {
+    width: 20px;
+    height: 20px;
+    border: solid 2px transparent;
+    display: flex;
+  }
+
+  .anatomy-button:hover .icon svg {
+    border: solid 2px rgba(255, 0, 170, 0.692);
+  }
+
+  .anatomy-button .padding-left {
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background-color: rgb(255, 0, 170);
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .anatomy-button .padding-left:before {
+    content: "";
+    width: 2px;
+    height: 10px;
+    background-color: rgb(255, 0, 170);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .anatomy-button .padding-left:after {
+    content: "";
+    width: 2px;
+    height: 10px;
+    background-color: rgb(255, 0, 170);
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .anatomy-button .padding-left-line {
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background-color: rgb(255, 0, 170);
+    left: -24px;
+    top: 11px;
+    transform: rotate(-50deg);
+  }
+
+  .anatomy-button .padding-left-line::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 6px;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 0, 170);
+    border-radius: 100%;
+  }
+
+  .anatomy-button .padding-left-text {
+    color: rgb(255, 0, 170);
+    font-size: 12px;
+    position: absolute;
+    white-space: nowrap;
+    transform: rotate(50deg);
+    bottom: 30px;
+    left: -67px;
+  }
+
+  .anatomy-button .padding-right {
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background-color: rgb(255, 0, 170);
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .anatomy-button .padding-right:before {
+    content: "";
+    width: 2px;
+    height: 10px;
+    background-color: rgb(255, 0, 170);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .anatomy-button .padding-right:after {
+    content: "";
+    width: 2px;
+    height: 10px;
+    background-color: rgb(255, 0, 170);
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .anatomy-button .padding-right-line {
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background-color: rgb(255, 0, 170);
+    right: -24px;
+    top: 11px;
+    transform: rotate(50deg);
+  }
+
+  .anatomy-button .padding-right-line::before {
+    content: "";
+    position: absolute;
+    left: 30px;
+    top: 0;
+    width: 6px;
+    height: 6px;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 0, 170);
+    border-radius: 100%;
+  }
+
+  .anatomy-button .padding-right-text {
+    color: rgb(255, 0, 170);
+    font-size: 12px;
+    position: absolute;
+    white-space: nowrap;
+    transform: rotate(-50deg);
+    bottom: 33px;
+    left: 18px;
+  }
+
+  .anatomy-button .background {
+    position: absolute;
+  }
+
+  .anatomy-button .background::before {
+    content: "";
+    position: absolute;
+    right: 27px;
+    bottom: -70px;
+    width: 100px;
+    height: 53px;
+    background-color: transparent;
+    border-radius: 0px 0px 22px 22px;
+    border-right: solid 2px rgb(255, 0, 170);
+    border-bottom: solid 2px transparent;
+  }
+
+  .anatomy-button .background::after {
+    content: "";
+    position: absolute;
+    right: 25px;
+    bottom: -20px;
+    width: 6px;
+    height: 6px;
+    background-color: rgb(255, 0, 170);
+    border-radius: 100%;
+  }
+
+  .anatomy-button .background-text {
+    position: absolute;
+    color: rgb(255, 0, 170);
+    font-size: 12px;
+    bottom: -70px;
+    left: -115px;
+  }
+
+  .anatomy-button .border {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .anatomy-button .border:before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border: solid 2px rgb(255, 0, 170);
+    position: absolute;
+    right: 0%;
+    top: 0;
+    transform: translate(50%, -50%);
+    border-radius: 100%;
+  }
+
+  .anatomy-button .border:after {
+    content: "";
+    width: 2px;
+    height: 25px;
+    background-color: rgb(255, 0, 170);
+    position: absolute;
+    right: -10px;
+    top: -15px;
+    transform: translate(50%, -50%) rotate(60deg);
+  }
+
+  .anatomy-button .border .border-text {
+    position: absolute;
+    color: rgb(255, 0, 170);
+    font-size: 12px;
+    right: -112px;
+    top: -30px;
+    white-space: nowrap;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes beam {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(-45deg);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateX(200%) translateY(200%) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+.animate-gradient {
+  background-size: 300% 300%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.text-glow {
+  text-shadow: 0 0 30px rgba(var(--primary-rgb), 0.3);
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.animate-floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+.animate-beam {
+  animation: beam 10s infinite linear;
+}
+
+/* Hide Next.js Dev Overlay */
+nextjs-portal,
+#nextjs-dev-overlay,
+[data-nextjs-toast-wrapper],
+[data-next-dev-overlay] {
+  display: none !important;
 }

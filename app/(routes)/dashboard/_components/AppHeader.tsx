@@ -1,0 +1,64 @@
+import { UserButton } from '@clerk/nextjs'
+import Link from 'next/link'
+import Logo from '@/components/ui/Logo';
+import BubbleButton from '@/components/ui/BubbleButton';
+
+const menuOptions = [
+    {
+        id: 1,
+        name: 'Home',
+        path: '/dashboard'
+    },
+    {
+        id: 2,
+        name: 'History',
+        path: '/dashboard/history'
+    },
+    {
+        id: 3,
+        name: 'Pricing',
+        path: '/pricing'
+    },
+    {
+        id: 4,
+        name: 'Profile',
+        path: '/profile'
+    }
+]
+function AppHeader() {
+    return (
+        <header className='sticky top-0 z-50 w-full glass border-b transition-all duration-300'>
+            <div className='flex items-center justify-between px-10 md:px-20 lg:px-40 h-20'>
+                <Link href="/" className="flex items-center gap-2 group transition-all">
+                    <div className="flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <Logo size={40} />
+                    </div>
+                    <h1 className="text-lg font-bold tracking-tight text-foreground md:text-xl">
+                        Arogya<span className="text-primary font-extrabold">Vaani</span>
+                    </h1>
+                </Link>
+
+                <nav className='hidden md:flex gap-8 items-center'>
+                    {menuOptions.map((option, index) => (
+                        <BubbleButton key={index} href={option.path}>
+                            {option.name}
+                        </BubbleButton>
+                    ))}
+                </nav>
+
+                <div className="flex items-center gap-4">
+                    <UserButton
+                        afterSignOutUrl="/"
+                        appearance={{
+                            elements: {
+                                userButtonAvatarBox: "h-14 w-14"
+                            }
+                        }}
+                    />
+                </div>
+            </div>
+        </header>
+    )
+}
+
+export default AppHeader

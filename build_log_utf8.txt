@@ -1,0 +1,173 @@
+﻿Γû▓ Next.js 16.1.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+node.exe : Error: 
+Cannot apply unknown 
+utility class `shadow
+-[0_8px_32px_0_rgba(3
+1,`
+At line:1 char:1
++ & "C:\Program Files
+\nodejs/node.exe" 
+"C:\Users\HARSHITH 
+PALAN\AppData ...
++ ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: (Error:    
+ Cannot a...2px_0    
+_rgba(31,`:Strin    
+g) [], RemoteExc    
+eption
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+    [2m[at 
+onInvalidCandidate (D
+:\ai-medical-voice-ag
+ent\node_modules\tail
+windcss\dist\lib.js:2
+1:1511)][0m
+    [2m[at Te (D:\ai
+-medical-voice-agent\
+node_modules\tailwind
+css\dist\lib.js:16:36
+326)][0m
+    [2m[at D:\ai-med
+ical-voice-agent\node
+_modules\tailwindcss\
+dist\lib.js:21:355][
+0m
+    [2m[at Rr (D:\ai
+-medical-voice-agent\
+node_modules\tailwind
+css\dist\lib.js:3:171
+8)][0m
+    [2m[at _ (D:\ai-
+medical-voice-agent\n
+ode_modules\tailwindc
+ss\dist\lib.js:3:1377
+)][0m
+    [2m[at $e (D:\ai
+-medical-voice-agent\
+node_modules\tailwind
+css\dist\lib.js:21:17
+2)][0m
+    [2m[at un (D:\ai
+-medical-voice-agent\
+node_modules\tailwind
+css\dist\lib.js:38:29
+4)][0m
+    [2m[at async cn 
+(D:\ai-medical-voice-
+agent\node_modules\ta
+ilwindcss\dist\lib.js
+:38:631)][0m
+    [2m[at async Xr 
+(D:\ai-medical-voice-
+agent\node_modules\@t
+ailwindcss\node\dist\
+index.js:10:3417)][0
+m
+    [2m[at async I (
+D:\ai-medical-voice-a
+gent\node_modules\@ta
+ilwindcss\postcss\dis
+t\index.js:10:3977)]
+[0m
+
+> Build error 
+occurred
+Error: Turbopack 
+build failed with 1 
+errors:
+./app/globals.css
+Error evaluating 
+Node.js code
+CssSyntaxError: 
+tailwindcss: D:\ai-me
+dical-voice-agent\app
+\globals.css:1:1: 
+Cannot apply unknown 
+utility class `shadow
+-[0_8px_32px_0_rgba(3
+1,`
+    at Input.error (n
+ode_modules/postcss/l
+ib/input.js:135:16) [
+D:\ai-medical-voice-a
+gent\.next\build\chun
+ks\node_modules_fe693
+df6._.js:4651:22]
+    at Root.error (no
+de_modules/postcss/li
+b/node.js:146:32) [D:
+\ai-medical-voice-age
+nt\.next\build\chunks
+\node_modules_fe693df
+6._.js:928:38]
+    [at Object.Once (
+D:\ai-medical-voice-a
+gent\node_modules\@ta
+ilwindcss\postcss\dis
+t\index.js:10:6911)]
+    at async 
+LazyResult.runAsync (
+node_modules/postcss/
+lib/lazy-result.js:29
+3:11) [D:\ai-medical-
+voice-agent\.next\bui
+ld\chunks\node_module
+s_fe693df6._.js:6206:
+21]
+    at async 
+transform (turbopack:
+///[turbopack-node]/t
+ransforms/postcss.ts:
+70:34) [D:\ai-medical
+-voice-agent\.next\bu
+ild\chunks\[root-of-t
+he-server]__51225daf.
+_.js:146:36]
+    at async run (tur
+bopack:///[turbopack-
+node]/ipc/evaluate.ts
+:92:23) [D:\ai-medica
+l-voice-agent\.next\b
+uild\chunks\[root-of-
+the-server]__974941ed
+._.js:443:31]
+
+Import trace:
+  Client Component 
+Browser:
+    
+./app/globals.css 
+[Client Component 
+Browser]
+    ./app/layout.tsx 
+[Server Component]
+
+
+    at async 
+transform (turbopack:
+///[turbopack-node]/t
+ransforms/postcss.ts:
+70:34) [D:\ai-medical
+-voice-agent\.next\bu
+ild\chunks\[root-of-t
+he-server]__51225daf.
+_.js:146:36])
+    at async run (tur
+bopack:///[turbopack-
+node]/ipc/evaluate.ts
+:92:23) [D:\ai-medica
+l-voice-agent\.next\b
+uild\chunks\[root-of-
+the-server]__974941ed
+._.js:443:31])
