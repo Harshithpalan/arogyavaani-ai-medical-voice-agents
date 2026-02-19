@@ -1,7 +1,8 @@
 "use client"
 import axios from "axios";
 import { useParams } from "next/navigation";
-import React, { use, useEffect, useState } from "react";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import { doctorAgent } from "../../_components/DoctorAgentCard";
 import { Circle, Loader, PhoneCall, Slice } from "lucide-react";
 import Image from "next/image";

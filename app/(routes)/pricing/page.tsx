@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import * as React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Check, Shield, Zap, Star } from "lucide-react";
@@ -109,7 +109,7 @@ const PricingCard = ({
     icon: React.ReactNode;
 }) => (
     <div className={`relative p-8 rounded-[2.5rem] border transition-all duration-300 hover:-translate-y-2 group ${highlight
-        ? "bg-primary/5 border-primary/30 shadow-[0_0_40px_rgba(var(--primary-rgb),0.1)] scale-105 z-10"
+        ? "bg-primary/5 border-primary/30 shadow-2xl shadow-primary/20 scale-105 z-10"
         : "bg-muted/30 border-border/50 glass hover:bg-muted/50"
         }`}>
         {highlight && (

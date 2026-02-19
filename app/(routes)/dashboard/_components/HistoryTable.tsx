@@ -1,5 +1,5 @@
 "use client"
-import React, { ReactNode } from 'react'
+import * as React from 'react'
 import {
   Table,
   TableBody,

@@ -1,6 +1,5 @@
-import React from 'react'
+import * as React from 'react'
 import HistoryList from '../_components/HistoryList'
-
 
 function History() {
     return (

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 import Logo from '@/components/ui/Logo';

@@ -1,5 +1,5 @@
 import { AIDoctorAgents } from '@/shared/list'
-import React from 'react'
+import * as React from 'react'
 import DoctorAgentCard from './DoctorAgentCard'
 
 function DoctorsAgentList() {

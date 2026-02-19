@@ -1,5 +1,4 @@
 import { integer, json, pgTable, text, varchar } from "drizzle-orm/pg-core";
-import { number } from "motion/react";
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -11,7 +10,7 @@ export const usersTable = pgTable("users", {
 export const SessionChatTable = pgTable('sessionChatTable', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   sessionId: varchar().notNull(),
-  notes:text(),
+  notes: text(),
   selectedDoctor: json(),
   conversation: json(),
   report: json(),

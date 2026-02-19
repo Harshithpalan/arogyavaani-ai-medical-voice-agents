@@ -67,7 +67,8 @@ export async function POST(req: NextRequest) {
     }).where(eq(SessionChatTable.sessionId, sessionId));
 
     return NextResponse.json(JSONResp);
-  } catch (e) {
-    return NextResponse.json(e);
+  } catch (e: any) {
+    console.error("Error in medical-report route:", e);
+    return NextResponse.json({ error: e.message || "Internal Server Error" }, { status: 500 });
   }
 }
