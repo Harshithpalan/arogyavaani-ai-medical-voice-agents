@@ -8,6 +8,9 @@ export async function POST(req: NextRequest) {
   const user = await currentUser();
 
   try {
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     // Check if User Already Exits 
     const users = await db.select().from(usersTable)
       //@ts-ignore

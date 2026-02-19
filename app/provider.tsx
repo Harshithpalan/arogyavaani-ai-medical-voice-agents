@@ -19,17 +19,27 @@ function Provider({
 
   const { user } = useUser();
   const [UserDetail, setUserDetail] = useState<UsersDetail | undefined>(undefined)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    user && CreateNewUser();
-  }, [user])
+    if (user && !UserDetail && !loading) {
+      CreateNewUser();
+    }
+  }, [user, UserDetail, loading])
 
 
 
   const CreateNewUser = async () => {
-    const result = await axios.post('/api/users');
-    console.log(result.data);
-    setUserDetail(result.data);
+    try {
+      setLoading(true);
+      const result = await axios.post('/api/users');
+      console.log(result.data);
+      setUserDetail(result.data);
+    } catch (e) {
+      console.error("Error creating user session:", e);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
