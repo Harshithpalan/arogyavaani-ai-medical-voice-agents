@@ -6,21 +6,23 @@ import { Button } from "@/components/ui/button";
 import AddNewSessionDialog from "./AddNewSessionDialog";
 import axios from "axios";
 import HistoryTable, { SessionDetail } from "./HistoryTable";
+import { UserDetailContext } from "@/context/UserDetailContext";
 
 function HistoryList() {
+  const { UserDetail } = React.useContext(UserDetailContext);
   const [historyList, setHistoryList] = useState<SessionDetail[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    GetHistoryList();
-  }, [])
+    UserDetail && GetHistoryList();
+  }, [UserDetail])
 
   const GetHistoryList = async () => {
     try {
       setLoading(true);
       setError(null);
-      const result = await axios.get('/api/session-chat?sessionId=all');
+      const result = await axios.get('/api/session-chat?sessionId=all&email=' + UserDetail?.email);
       console.log(result.data);
       if (Array.isArray(result.data)) {
         setHistoryList(result.data);

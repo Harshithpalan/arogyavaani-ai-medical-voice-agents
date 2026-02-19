@@ -19,7 +19,10 @@ import axios from "axios";
 import DoctorAgentCard, { doctorAgent } from "./DoctorAgentCard";
 import SuggestedDoctorCard from "./SuggestedDoctorCard";
 import { useRouter } from "next/navigation";
+import { UserDetailContext } from "@/context/UserDetailContext";
+
 function AddNewSessionDialog() {
+  const { UserDetail } = React.useContext(UserDetailContext);
   const [note, setNote] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [suggestedDoctors, setSuggestedDoctors] = useState<doctorAgent[]>();
@@ -42,6 +45,7 @@ function AddNewSessionDialog() {
     const result = await axios.post('/api/session-chat', {
       notes: note,
       selectedDoctor: selectedDoctor,
+      email: UserDetail?.email
     });
 
     console.log(result.data)

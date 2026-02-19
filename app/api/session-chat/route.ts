@@ -2,22 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/config/db';
 import { SessionChatTable } from '@/config/schema';
 import { v4 as uuidv4 } from 'uuid';
-import { currentUser } from '@clerk/nextjs/server';
+import { auth } from '@clerk/nextjs/server';
 import { eq, desc } from 'drizzle-orm';
 
 export async function POST(req: NextRequest) {
-    const { notes, selectedDoctor } = await req.json();
-    const user = await currentUser();
+    const { notes, selectedDoctor, email } = await req.json();
+    const { userId } = await auth();
     try {
+        if (!userId) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
         const sessionId = uuidv4();
-        const result = await db.insert(SessionChatTable).values({
+        await db.insert(SessionChatTable).values({
             sessionId: sessionId,
-            createdBy: user?.primaryEmailAddress?.emailAddress,
+            createdBy: email,
             notes: notes,
             selectedDoctor: selectedDoctor,
             createdOn: (new Date()).toString()
-            //@ts-ignore
-        }).returning({ SessionChatTable });
+        });
 
         return NextResponse.json({ sessionId });
     } catch (e: any) {
@@ -27,25 +29,28 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+    const { userId } = await auth();
     const { searchParams } = new URL(req.url);
     const sessionId = searchParams.get('sessionId');
-    const user = await currentUser();
+    const email = searchParams.get('email');
 
     try {
-        if (!user) {
+        if (!userId) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
+
         if (sessionId == 'all') {
+            if (!email) {
+                return NextResponse.json({ error: "Email required for history" }, { status: 400 });
+            }
             const result = await db.select().from(SessionChatTable)
-                //@ts-ignore
-                .where(eq(SessionChatTable.createdBy, user?.primaryEmailAddress?.emailAddress))
+                .where(eq(SessionChatTable.createdBy, email))
                 .orderBy(desc(SessionChatTable.id));
             return NextResponse.json(result);
         }
         else {
             const result = await db.select().from(SessionChatTable)
-                //@ts-ignore
-                .where(eq(SessionChatTable.sessionId, sessionId));
+                .where(eq(SessionChatTable.sessionId, sessionId as string));
 
             return NextResponse.json(result[0]);
         }
