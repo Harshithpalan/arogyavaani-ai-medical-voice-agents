@@ -46,13 +46,14 @@
 - A Neon PostgreSQL instance
 - Vapi.ai API Key
 - Clerk API Keys
+- DATABASE_URL (PostgreSQL connection string)
 
 ### Installation
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/ai-medical-voice-agent.git
-   cd ai-medical-voice-agent
+   git clone https://github.com/Harshithpalan/arogyavaani-ai-medical-voice-agents.git
+   cd arogyavaani-ai-medical-voice-agents
    ```
 
 2. **Install dependencies**:
@@ -78,6 +79,8 @@
 5. **Run the development server**:
    ```bash
    npm run dev
+   ```
+
 ---
 
 ## 🏥 AI Specialists Overview
@@ -91,3 +94,6 @@
 | **Cardiologist** | Heart health and blood pressure. |
 | **Dermatologist** | Skin issues, rashes, and infections. |
 
+---
+
+*Last synchronization update: 2026-02-20*
