@@ -32,6 +32,9 @@ export async function GET(req: NextRequest) {
     const user = await currentUser();
 
     try {
+        if (!user) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
         if (sessionId == 'all') {
             const result = await db.select().from(SessionChatTable)
                 //@ts-ignore
