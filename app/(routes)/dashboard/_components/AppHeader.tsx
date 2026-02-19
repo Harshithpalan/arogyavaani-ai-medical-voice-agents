@@ -28,9 +28,9 @@ const menuOptions = [
 ]
 function AppHeader() {
     return (
-        <header className='sticky top-0 z-50 w-full glass border-b transition-all duration-300'>
+        <header className='sticky top-0 z-[60] w-full glass border-b transition-all duration-300'>
             <div className='flex items-center justify-between px-10 md:px-20 lg:px-40 h-20'>
-                <Link href="/" className="flex items-center gap-2 group transition-all">
+                <Link href="/dashboard" className="flex items-center gap-2 group transition-all">
                     <div className="flex items-center justify-center group-hover:scale-105 transition-transform">
                         <Logo size={40} />
                     </div>
@@ -39,7 +39,7 @@ function AppHeader() {
                     </h1>
                 </Link>
 
-                <nav className='hidden md:flex gap-8 items-center'>
+                <nav className='hidden md:flex gap-4 items-center'>
                     {menuOptions.map((option, index) => (
                         <BubbleButton key={index} href={option.path}>
                             {option.name}
@@ -49,10 +49,9 @@ function AppHeader() {
 
                 <div className="flex items-center gap-4">
                     <UserButton
-                        afterSignOutUrl="/"
                         appearance={{
                             elements: {
-                                userButtonAvatarBox: "h-14 w-14"
+                                userButtonAvatarBox: "h-12 w-12"
                             }
                         }}
                     />
