@@ -3,7 +3,6 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15+-black?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5+-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **ArogyaVaani** (meaning "Voice of Health") is an enterprise-grade AI medical platform that provides 24/7 patient triage and consultation through specialized voice agents. Built with a focus on reliability, medical accuracy, and premium user experience.
 
@@ -79,10 +78,6 @@
 5. **Run the development server**:
    ```bash
    npm run dev
-   ```
-
-Open [http://localhost:3000](http://localhost:3000) to see the application in action.
-
 ---
 
 ## 🏥 AI Specialists Overview
