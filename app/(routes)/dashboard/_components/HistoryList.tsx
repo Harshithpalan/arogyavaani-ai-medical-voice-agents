@@ -5,21 +5,35 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import AddNewSessionDialog from "./AddNewSessionDialog";
 import axios from "axios";
-import HistoryTable from "./HistoryTable";
-import { SessionDetail } from "../medical-agent/[sessionId]/page";
+import HistoryTable, { SessionDetail } from "./HistoryTable";
 
 function HistoryList() {
-  const [historyList, setHistoryList] = useState([]);
+  const [historyList, setHistoryList] = useState<SessionDetail[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     GetHistoryList();
   }, [])
 
   const GetHistoryList = async () => {
-    const result = await axios.get('/api/session-chat?sessionId=all');
-    console.log(result.data);
-    setHistoryList(result.data);
-
+    try {
+      setLoading(true);
+      setError(null);
+      const result = await axios.get('/api/session-chat?sessionId=all');
+      console.log(result.data);
+      if (Array.isArray(result.data)) {
+        setHistoryList(result.data);
+      } else {
+        setHistoryList([]);
+        console.error("Expected array for history list, got:", result.data);
+      }
+    } catch (err: any) {
+      console.error("Failed to fetch history:", err);
+      setError("Failed to load your history. Please try refreshing.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

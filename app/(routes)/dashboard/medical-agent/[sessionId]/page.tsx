@@ -13,15 +13,7 @@ import { Messages } from "openai/resources/chat/completions.mjs";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-
-export type SessionDetail = {
-  id: number,
-  notes: string,
-  sessionId: string,
-  report: JSON,
-  selectedDoctor: doctorAgent,
-  createdOn: string,
-}
+import { SessionDetail } from "../../_components/HistoryTable";
 
 type messages = {
   role: string,

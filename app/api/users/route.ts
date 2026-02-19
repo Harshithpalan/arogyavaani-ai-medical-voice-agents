@@ -26,8 +26,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(users[0]);
   }
-  catch (e) {
-    return NextResponse.json(e);
+  catch (e: any) {
+    console.error("Error in users route:", e);
+    return NextResponse.json({ error: e.message || "Internal Server Error" }, { status: 500 });
   }
-
 }

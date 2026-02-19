@@ -20,10 +20,10 @@ export async function POST(req: NextRequest) {
         }).returning({ SessionChatTable });
 
         return NextResponse.json({ sessionId });
-    } catch (e) {
-        return NextResponse.json(e);
+    } catch (e: any) {
+        console.error("Error in session-chat POST route:", e);
+        return NextResponse.json({ error: e.message || "Internal Server Error" }, { status: 500 });
     }
-
 }
 
 export async function GET(req: NextRequest) {
@@ -31,19 +31,23 @@ export async function GET(req: NextRequest) {
     const sessionId = searchParams.get('sessionId');
     const user = await currentUser();
 
-    if (sessionId == 'all') {
-        const result = await db.select().from(SessionChatTable)
-            //@ts-ignore
-            .where(eq(SessionChatTable.createdBy, user?.primaryEmailAddress?.emailAddress))
-            .orderBy(desc(SessionChatTable.id));
-        return NextResponse.json(result);
+    try {
+        if (sessionId == 'all') {
+            const result = await db.select().from(SessionChatTable)
+                //@ts-ignore
+                .where(eq(SessionChatTable.createdBy, user?.primaryEmailAddress?.emailAddress))
+                .orderBy(desc(SessionChatTable.id));
+            return NextResponse.json(result);
+        }
+        else {
+            const result = await db.select().from(SessionChatTable)
+                //@ts-ignore
+                .where(eq(SessionChatTable.sessionId, sessionId));
 
-    }
-    else {
-        const result = await db.select().from(SessionChatTable)
-            //@ts-ignore
-            .where(eq(SessionChatTable.sessionId, sessionId));
-
-        return NextResponse.json(result[0]);
+            return NextResponse.json(result[0]);
+        }
+    } catch (e: any) {
+        console.error("Error in session-chat GET route:", e);
+        return NextResponse.json({ error: e.message || "Internal Server Error" }, { status: 500 });
     }
 }

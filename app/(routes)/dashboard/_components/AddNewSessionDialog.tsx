@@ -1,5 +1,6 @@
 "use client"
-import React, { use, useState } from "react";
+import * as React from "react";
+import { useState } from "react";
 import { AnatomyButton } from "@/components/ui/anatomy-button";
 import {
   Dialog,
@@ -70,7 +71,7 @@ function AddNewSessionDialog() {
                 <h2>Select the Doctor</h2>
                 <div className='grid grid-cols-3 gap-5'>
                   {/* // Suggested Doctors */}
-                  {suggestedDoctors.map((doctor, index) => (
+                  {Array.isArray(suggestedDoctors) && suggestedDoctors.map((doctor, index) => (
                     <SuggestedDoctorCard doctorAgent={doctor} key={index}
                       setSelectedDoctor={() => setSelectedDoctor(doctor)}
                       //@ts-ignore
@@ -83,7 +84,7 @@ function AddNewSessionDialog() {
         </DialogHeader>
         <DialogFooter >
           <DialogClose asChild>
-            <Button variant={'outline'}>Cancle</Button>
+            <Button variant={'outline'}>Cancel</Button>
           </DialogClose>
           {!suggestedDoctors ? <Button disabled={!note || loading} onClick={() => OnClickNext()}>
             Next  {loading ? <Loader2 className='animate-spin' /> : <ArrowRight />} </Button>
